@@ -1,14 +1,15 @@
 from flask import Flask, request, render_template
-import pandas as pd 
+import pandas as pd
 import pickle
+import os  # Render'ın PORT ortam değişkeni için gerekli
 
 app = Flask(__name__)
 
-
-with open("model/model.pkl","rb") as f :
+# Model yükleniyor
+with open("model/model.pkl", "rb") as f:
     model = pickle.load(f)
 
-
+# Tahmin fonksiyonu
 def predict_personality(time_alone, social_events, going_outside, friends_circle, post_freq, stage_fear, drained_after_social):
     sample = pd.DataFrame({
         "Time_spent_Alone": [time_alone],
@@ -26,7 +27,7 @@ def predict_personality(time_alone, social_events, going_outside, friends_circle
     label_map = {0: "İçe Dönük", 1: "Dışa Dönük"}
     return label_map[prediction]
 
-
+# Ana route
 @app.route('/', methods=['GET', 'POST'])
 def index():
     result = None
@@ -43,5 +44,7 @@ def index():
 
     return render_template('index.html', result=result)
 
+# Render için port bind ayarı
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(debug=False, host='0.0.0.0', port=port)
