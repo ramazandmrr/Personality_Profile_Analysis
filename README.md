@@ -6,5 +6,5 @@ This project is a Flask-based web application that predicts a person's **persona
 
 - Backend developed with Flask
 - Personality prediction using a machine learning model
-- Modern, user-friendly interface (HTML/CSS/Font Awesome)
+- Modern, user-friendly interface 
 - Accepts input from a form and displays the result in a modal
