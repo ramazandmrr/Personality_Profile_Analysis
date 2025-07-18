@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kişilik Analiz Aracı</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h1>Kişilik Profili Analizi</h1>
+                <p class="subtitle">Davranışsal verilerinize göre kişilik özelliklerinizi analiz edelim</p>
+            </div>
+            
+            <form method="POST" class="form">
+                <div class="form-group">
+                    <label for="time_alone">Günlük Yalnız Geçirilen Zaman</label>
+                    <div class="input-with-unit">
+                        <input type="number" step="0.1" id="time_alone" name="time_alone" required>
+                        <span class="unit">saat/gün</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="social_events">Haftalık Sosyal Etkinlik Katılımı</label>
+                    <div class="input-with-unit">
+                        <input type="number" step="0.1" id="social_events" name="social_events" required>
+                        <span class="unit">adet/hafta</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="going_outside">Dışarı Çıkma Sıklığı</label>
+                    <div class="input-with-unit">
+                        <input type="number" step="0.1" id="going_outside" name="going_outside" required>
+                        <span class="unit">kez/hafta</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="friends_circle">Arkadaş Çevresi Büyüklüğü</label>
+                    <div class="input-with-unit">
+                        <input type="number" step="0.1" id="friends_circle" name="friends_circle" required>
+                        <span class="unit">kişi</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="post_freq">Sosyal Medya Paylaşım Sıklığı</label>
+                    <div class="input-with-unit">
+                        <input type="number" step="0.1" id="post_freq" name="post_freq" required>
+                        <span class="unit">kez/hafta</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="stage_fear">Sahne Korkusu</label>
+                    <select id="stage_fear" name="stage_fear" required>
+                        <option value="" disabled selected>Seçiniz</option>
+                        <option value="No">Hayır, sahneye çıkmaktan rahatsız olmam</option>
+                        <option value="Yes">Evet, sahne performansı beni strese sokar</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="drained_after_social">Sosyalleşme Sonrası Durum</label>
+                    <select id="drained_after_social" name="drained_after_social" required>
+                        <option value="" disabled selected>Seçiniz</option>
+                        <option value="No">Enerjim artar, daha dinç hissederim</option>
+                        <option value="Yes">Yorulurum, dinlenmeye ihtiyaç duyarım</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="submit-btn">
+                    <span class="btn-text">Analiz Et</span>
+                    <span class="btn-icon">→</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    {% if result %}
+    <div class="modal-overlay" id="resultModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="result-card">
+                <div class="result-header">
+                    <i class="fa-solid fa-clipboard-user"></i>
+                    <h3>Analiz Sonucu</h3>
+                </div>
+                <p class="result-text">{{ result }}</p>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <script>
+        function closeModal() {
+            const modal = document.getElementById('resultModal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Sayfa yüklendiğinde modalı göster
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('resultModal');
+            if (modal) {
+                modal.style.display = 'flex';
+            }
+        });
+    </script>
+</body>
+</html>
